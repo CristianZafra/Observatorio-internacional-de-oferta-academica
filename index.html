@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Observatorio Internacional de Oferta Académica — Ingeniería Multimedia</title>
+</head>
+<body>
+<script src="payload.js"></script>
+<script>
+(async()=>{
+  const bin=atob(window.DASHBOARD_GZIP_BASE64);
+  const bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+  const html=await new Response(stream).text();
+  document.open();
+  document.write(html);
+  document.close();
+})().catch(err=>{
+  document.body.innerHTML='<p style="font-family:system-ui;padding:24px">No fue posible cargar el observatorio en este navegador.</p>';
+  console.error(err);
+});
+</script>
+</body>
+</html>
